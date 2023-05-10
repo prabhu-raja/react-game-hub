@@ -8,8 +8,6 @@ import { GameQuery } from '../App';
 
 interface Props {
   gameQuery: GameQuery;
-  // selectedGenre: Genre | null;
-  // selectedPlatform: Platform | null;
 }
 
 const GameGrid = ({ gameQuery }: Props) => {
@@ -19,7 +17,7 @@ const GameGrid = ({ gameQuery }: Props) => {
   return (
     <>
       {error && <Text>{error}</Text>}
-      <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 5 }} padding="10px" spacing={3}>
+      <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} padding="10px" spacing={6}>
         {isLoading &&
           skeletons.map((skl) => (
             <GameCardContainer key={skl}>
