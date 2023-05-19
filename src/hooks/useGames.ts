@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { GameQuery } from '../App';
 import useData from './useData';
 // import apiClient, { FetchResponse } from '../services/api-client';
@@ -33,6 +33,7 @@ const useGames = (gameQuery: GameQuery) => {
   };
   */
 
+  /*
   return useQuery<Game[], Error>({
     queryKey: ['games', gameQuery],
     queryFn: () =>
@@ -46,6 +47,24 @@ const useGames = (gameQuery: GameQuery) => {
       }),
     // queryFn: fetchGames,
     staleTime: 10 * 1000,
+  });
+  */
+
+  return useInfiniteQuery<Game[], Error>({
+    queryKey: ['games', gameQuery],
+    queryFn: ({ pageParam = 1 }) =>
+      apiClient.getAll({
+        params: {
+          genres: gameQuery.genre?.id,
+          parent_platforms: gameQuery.platform?.id,
+          ordering: gameQuery.sortOrder,
+          search: gameQuery.searchText,
+          page: pageParam,
+        },
+      }),
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage?.length > 0 ? allPages.length + 1 : undefined;
+    },
   });
 };
 
