@@ -11,7 +11,6 @@ interface Props {
 
 const PlatformSelector = ({ selectedPlatformId, onSelectPlatform }: Props) => {
   const { data, error } = usePlatforms();
-  // const selectedPlatform = data.find((p) => p.id === selectedPlatformId);
   const selectedPlatform = usePlatform(selectedPlatformId);
 
   if (error) return null;
